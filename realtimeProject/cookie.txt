@@ -1,0 +1,2 @@
+document.cookie = 'userInfo={"userId":"b002439e190c4bd68af5b14dc018240d","imgHead":null,"nickName":"哈哈哈","account":null,"passWord":"e10adc3949ba59abbe56e057f20f883e","email":"1@qq.com","activationKey":null,"info":null,"wealthValue":"898.00","paymentPassword":"1","createTime":null};path=/'
+ 

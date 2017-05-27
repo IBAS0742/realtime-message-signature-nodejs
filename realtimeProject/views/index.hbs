@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="realtime.browser.js"></script>
+    <script src="/javascripts/jquery.js"></script>
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <p id="stat"></p>
+        <div id="loginDiv">用户名<input id="uName" type="text" value=""/><button onclick="go()">登录</button></div>
+        <div style="display: none;" id="whoDiv">和谁对话？<input id="tName" type="text" value=""/><button onclick="go_()">开始</button></div>
+        <div style="display: none;" id="conDiv">
+            <div><input id="msg" type="text" value="hi~"/><button onclick="go__()">发送</button></div>
+            <div>
+                <h3>聊天内容</h3>
+                <div id="msgCon"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var Realtime = AV.Realtime;
+        var TextMessage = AV.TextMessage;
+        var APP_ID = '*****';
+        var realtime = new Realtime({
+            appId: APP_ID,
+            region: 'cn', //美国节点为 "us"
+            pushOfflineMessages: true,
+        });
+
+
+        var sign_login,
+                sign_conve;
+
+        function signatureFactory(client_id) {
+            return $.ajax({
+                url : '/sign',
+                data : {
+                    client_id : client_id,
+                    type_ : 'connect'
+                },
+                success : function(msg) {
+                    sign_login = msg;
+                    return msg;
+                }
+            });
+        };
+        function conversationSignatureFactory(conversationId, clientId, targetIds, action) {
+            return $.ajax({
+                url : 'sign',
+                data : {
+                    client_id : clientId,
+                    conv_id : conversationId,
+                    members : targetIds,
+                    action : action,
+                    type_ : 'startConversation'
+                },
+                function (msg) {
+                    sign_conve = msg;
+                    return msg;
+                }
+            });
+        }
+
+        var tom = null;
+        var tomName = null;
+        function login(who) {
+            tomName = who;
+            realtime.createIMClient(who,{
+                signatureFactory: signatureFactory,
+                conversationSignatureFactory: conversationSignatureFactory,
+            }).then(function(tom_){
+                $("#loginDiv").css({display : 'none'});
+                $("#whoDiv").css({display : 'block'});
+                console.log('登录成功');
+                $("#stat").html(tomName + '登录成功!');
+                tom = tom_;
+                tom_.on('message', function(message, conversation) {
+                    $("#msgCon").append('<p style="color: #ec16ef;">' + message.text + '</p>');
+                    console.log('Message received: ' + message.text);
+                });
+            });
+        };
+        function createConversation(who) {
+            if (tom) {
+                // 创建与Jerry之间的对话
+                $("#whoDiv").css({display : 'none'});
+                $("#conDiv").css({display : 'block'});
+                return tom.createConversation({
+                    members: [who],
+                    name: tomName + who,
+                });
+            } else {
+                return null;
+            }
+        }
+        function conv(conversation_,msg,suMsg) {
+            conversation_.then(function(conversation) {
+                // 发送消息
+                return conversation.send(new AV.TextMessage(msg));
+            }).then(function(message) {
+                console.log(suMsg);
+            }).catch(console.error);
+        }
+
+
+    </script>
+    <script>
+        var conv1 = null;
+        window.onload = function() {
+
+        };
+        function go() {
+            if ($("#uName").val()) {
+                login($("#uName").val());
+            }
+        };
+        function go_() {
+            if ($("#tName").val()) {
+                $("#stat").html(tomName + ' 正在和 ' + $("#tName").val() + ' 对话中');
+                conv1 = createConversation($("#tName").val());
+            }
+        };
+        function go__() {
+            if (conv1) {
+                if ($("#msg").val()) {
+                    conv(conv1,$("#msg").val(),'发送成功');
+                    $("#msgCon").append('<p style="color: #abef98;">' + $("#msg").val() + '</p>');
+                }
+            } else {
+                alert('建立连接失败');
+            }
+        };
+    </script>
+</body>
+</html>

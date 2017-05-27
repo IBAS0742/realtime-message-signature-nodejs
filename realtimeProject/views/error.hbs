@@ -1,0 +1,201 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1" media="(device-height: 568px)">
+        <title>你迷路了?</title>
+        <script type="text/javascript" src="/javascripts/jquery-1.11.3.js"></script>
+        <style type="text/css" media="screen">
+            body, html {
+                height: 100%;
+            }
+
+            body {
+                margin: 0;
+                background: #333;
+                color: #fff;
+                text-align: center;
+                font: 13px/1.6 "Helvetica Neue", Helvetica, Arial, sans-serif;
+            }
+
+            * {
+                box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+            }
+
+            .wrapper {
+                position: absolute;
+                top: 30%;
+                height: 150px;
+                left: 0;
+                right: 0;
+                width: 100%;
+            }
+
+            h3 {
+                margin: 0;
+            }
+
+            a {
+                color: #fff;
+                text-decoration: none;
+            }
+
+            p {
+                color: #ccc;
+            }
+
+            .infoP {
+                width: 89%;
+                margin: 4px 5%;
+            }
+
+            .mobile-404-error-number {
+                font-size: 100px;
+                font-weight: bold;
+                margin: 0 8px 20px;
+                line-height: 0;
+            }
+
+            .mobile-404-octocat-wrapper {
+                position: relative;
+                display: inline-block;
+                height: 71px;
+                width: 71px;
+                border-radius: 45px;
+                margin: 0 8px;
+
+                /*
+                 * Because the octocat becomes transparent we need a layer,
+                 * matching the background, to go in front of the pull cord,
+                 * so that it isn't seen before the octocat opacity is 1.
+                 */
+                background: #333;
+            }
+
+            .mobile-404-octocat-wrapper:after {
+                content: ""; display: block;
+                position: absolute;
+                width: 4px;
+                height: 4px;
+                border-radius: 4px;
+                background: #fff;
+                z-index: -2;
+                top: 58px;
+                left: 45px;
+                vertical-align: baseline;
+                box-shadow: 0 4px 0 #fff, 0 8px 0 #fff, 0 12px 0 #fff, 0 16px 0 #fff, 0 20px 0 #fff;
+
+                -webkit-animation-name: pull-string;
+                -webkit-animation-duration: .75s;
+                -webkit-animation-fill-mode: forwards;
+                -webkit-animation-delay: .5s;
+                animation-name: pull-string;
+                animation-duration: .75s;
+                animation-fill-mode: forwards;
+                animation-delay: .5s;
+
+            }
+
+            svg {
+                opacity: .25;
+                z-index: 999;
+                position: relative;
+            }
+
+            @-webkit-keyframes lightbulb {
+                0%, 8%, 14% {
+                    opacity: .1
+                }
+                0%, 10%, 25% {
+                    opacity: .25;
+                }
+                5%, 30%, 50%, 70% {
+                    opacity: .5;
+                }
+                16%, 60%, 80% {
+                    opacity: .75;
+                }
+                90% {
+                    opacity: .8;
+                }
+                94% {
+                    opacity: .5
+                }
+                100% {
+                    opacity: 1;
+                    stdDeviation: 0;
+                }
+            }
+
+            .mobile-404-lightbulb-ani {
+                -webkit-animation-name: lightbulb;
+                -webkit-animation-duration: 2.5s;
+                -webkit-animation-fill-mode: forwards;
+                animation-name: lightbulb;
+                animation-duration: 2.5s;
+                animation-fill-mode: forwards;
+                -webkit-animation-delay: 1.3s;
+                animation-delay: 1.3s;
+            }
+
+            @-webkit-keyframes pull-string {
+                50% {
+                    -webkit-transform: translate3d(0, 12px, 0);
+                    transform: translate3d(0, 12px, 0);
+                }
+                75% {
+                    -webkit-transform: none;
+                    transform: none;
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0;
+                }
+            }
+        </style>
+    </head>
+    <body>
+    <div class="wrapper">
+        <div class="mobile-404-error-number">
+            4<span class="mobile-404-octocat-wrapper">
+          <svg class="mobile-404-lightbulb-ani" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 132.1 129.8" enable-background="new 0 0 132.1 129.8" width="72" xml:space="preserve">
+              <circle cx="65" cy="65" r="65" stroke="black" stroke-width="2" fill="white"/>
+              <circle cx="65" cy="65" r="33" stroke="black" stroke-width="2" fill="gray"/>
+          </svg>
+        </span>4
+        </div>
+        <h3>找不到您要访问的页面<br/><a style="color: rgb(208, 208, 208);" id = 'retA'>点击此处返回</a></h3>
+        <br/>
+        <h3 style="text-align: left;">
+            <table class="infoP">
+                <tr>
+                    <td>
+                        1.
+                    </td>
+                    <td>
+                        可能您将访问的问题已经结束讨论了,您可以考虑前往<a style="color:rgb(117, 255, 225);" id= 'answerId' href="">答案区</a>查看一下
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        2.
+                    </td>
+                    <td>
+                        可能该页并未开放,请稍后再进行访问.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        3.
+                    </td>
+                    <td>
+                        可能您访问了错误的页面.
+                    </td>
+                </tr>
+            </table>
+        </h3>
+    </div>
+
+    </body>
+</html>
