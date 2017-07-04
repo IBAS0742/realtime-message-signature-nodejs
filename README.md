@@ -51,3 +51,32 @@ node server.js
 npm init
 node chat.js
 ```
+
+----
+### 项目三 ： rest api
+这个项目主要负责两件事，提供脚本服务和rest api 服务
+```html
+<!-- 实时通信所需脚本 -->
+<script src = "domain:prot/av.js"></script>
+<script src = "domain:prot/typed-messages.js"></script>
+<script src = "domain:prot/typed-messages.js"></script>
+```
+
+另外，rest API 服务，我写了一个创建房间的例子
+```javascript
+var cmdStr = 'curl -X POST ' +
+    '-H "X-LC-Id: appID appID appID appID" ' +
+    '-H "X-LC-Key: appKey appKey appKey" ' +
+    '-H "Content-Type: application/json" ' +
+    '-d \'' + JSON.stringify({name : "房间名称",m : ["参与者们"]}) + '\' ' +
+    'https:\/\/tab.leancloud.cn\/1.1\/classes\/_Conversation';
+exec(cmdStr, function(err,stdout,stderr){
+    if(err) {
+        console.log('something error :'+stderr);
+    } else {
+        var data = JSON.parse(stdout);
+        console.log(data);
+    }
+});
+```
+
