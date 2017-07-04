@@ -102,7 +102,7 @@ function loginAndInRoom() {
             Account(realtimeObj.realtime,defaultMessageTip,{who : 'who' + parseInt(Math.random() * 1000)})
                 .setOnMessage(function(message, conversation) {
                     //这里需要修改
-					//这里是收到信息后对信息处理的方法
+		    //这里是收到信息后对信息处理的方法
                     console.log(message);
                 }).login(function(){
                     window.onunload = function() {
@@ -110,7 +110,7 @@ function loginAndInRoom() {
                     };
                     realtimeObj.conversationObj =
                         ConvOP(realtimeObj.account)
-							//以下代码为进入指定 ID 的房间，其他做法请修改 Conv.js 文件进行扩展
+			     //以下代码为进入指定 ID 的房间，其他做法请修改 Conv.js 文件进行扩展
                              .addConv("roomID"/*5958b5ea7a1ff9003262097f*/,function () {
                                  realtimeObj.messageDear =
                                      messageObject(AV,realtimeObj.conversationObj);
