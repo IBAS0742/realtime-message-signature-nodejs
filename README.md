@@ -80,3 +80,62 @@ exec(cmdStr, function(err,stdout,stderr){
 });
 ```
 
+----
+### 其他：signInHTML
+这里的脚本建议是启动 项目三 来进行配合，这里引用脚本的顺序为
+```javascript
+<script src = "domain:prot/av.js"></script>
+<script src = "domain:prot/typed-messages.js"></script>
+<script src = "domain:prot/typed-messages.js"></script>
+<script src = "jquery.js"></script>
+<script src = "messageTip.js"></script>
+<script src = "Account.js"></script>
+<script src = "Conv.js"></script>
+<script src = "realtimeMessage.js"></script>
+```
+
+下面给一个实例
+```javascript
+function loginAndInRoom() {
+	//realtimeObj 定义于 Account.js 文件中统一管理
+	realtimeObj.account =
+            Account(realtimeObj.realtime,defaultMessageTip,{who : 'who' + parseInt(Math.random() * 1000)})
+                .setOnMessage(function(message, conversation) {
+                    //这里需要修改
+					//这里是收到信息后对信息处理的方法
+                    console.log(message);
+                }).login(function(){
+                    window.onunload = function() {
+                        realtimeObj.account.tom.close();
+                    };
+                    realtimeObj.conversationObj =
+                        ConvOP(realtimeObj.account)
+							//以下代码为进入指定 ID 的房间，其他做法请修改 Conv.js 文件进行扩展
+                             .addConv("roomID"/*5958b5ea7a1ff9003262097f*/,function () {
+                                 realtimeObj.messageDear =
+                                     messageObject(AV,realtimeObj.conversationObj);
+                                //这部分为回调，可以继续编写逻辑模块
+                             });
+                });
+}
+
+//假定以上代码执行完成后
+//发送给文本消息
+realtimeObj.messageDear.send({type:'Text',text : (new Date).toString()});
+//发送本地图片
+var getPhoto = document.getElementById("fileInpnt");
+realtimeObj
+    .messageDear
+    .send(
+        {
+            type:'Image',
+            text : '尝试发一张图片',
+            subscript : '描述一下咯',
+            url : getPhoto.files[0],
+            attr : {
+                'attr1' : 'first',
+                'attr2' : 'second'
+            }
+        }
+    );
+```
