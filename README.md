@@ -26,7 +26,7 @@ global.appSetting = {
         type_ : 'string'
     }],
 ```
-字段名称|同时没有解释
+字段名称|解释
 --|--
 name_|表示对应表单中的字段，为空时表示一个空串
 method_|只能是 before 和 after，表示直接加入还是加入到尾部，操作聊天时用到
